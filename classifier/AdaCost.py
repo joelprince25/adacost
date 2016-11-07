@@ -30,6 +30,9 @@ class AdaCost(BaseWeightBoosting, ClassifierMixin):
     n_estimators : integer, optional (default=50)
         The maximum number of estimators at which boosting is terminated.
         In case of perfect fit, the learning procedure is stopped early.
+
+    max_depth : integer, optional (default=1)
+        The maximum depth of the decision trees.
     
     learning_rate : float, optional (default=1.)
         Learning rate shrinks the contribution of each classifier by
@@ -90,6 +93,7 @@ class AdaCost(BaseWeightBoosting, ClassifierMixin):
     def __init__(self,
                  base_estimator=None,
                  n_estimators=50,
+                 max_depth = 1,
                  learning_rate=1.,
                  algorithm='SAMME.R',
                  cost_matrix=None,
@@ -101,6 +105,7 @@ class AdaCost(BaseWeightBoosting, ClassifierMixin):
             learning_rate=learning_rate,
             random_state=random_state)
 
+        self.max_depth = max_depth
         self.algorithm = algorithm
         self.cost_matrix = cost_matrix
         
@@ -147,7 +152,7 @@ class AdaCost(BaseWeightBoosting, ClassifierMixin):
     def _validate_estimator(self):
         """Check the estimator and set the base_estimator_ attribute."""
         super(AdaCost, self)._validate_estimator(
-            default=DecisionTreeClassifier(max_depth=1))
+            default=DecisionTreeClassifier(max_depth = self.max_depth))
 
         #  SAMME-R requires predict_proba-enabled base estimators
         if self.algorithm == 'SAMME.R':
