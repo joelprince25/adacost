@@ -109,9 +109,7 @@ class AdaCost(BaseWeightBoosting, ClassifierMixin):
         self.algorithm = algorithm
         self.cost_matrix = cost_matrix
         
-        if self.cost_matrix is None:
-            self.cost_table = self.cost_table_calc(np.ones([5,5]))
-        else:
+        if self.cost_matrix is not None:
             self.cost_table = self.cost_table_calc(self.cost_matrix)
     
     def cost_table_calc(self,cost_matrix):
@@ -142,6 +140,10 @@ class AdaCost(BaseWeightBoosting, ClassifierMixin):
         self : object
             Returns self.
         """
+        if self.cost_matrix is None:
+            n_classes = len(np.unique(y))
+            self.cost_table = self.cost_table_calc(np.ones([n_classes,n_classes]))
+            
         if self.algorithm not in ('SAMME', 'SAMME.R'):
             raise ValueError("algorithm %s is not supported" % self.algorithm)
 
