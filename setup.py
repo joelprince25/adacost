@@ -4,8 +4,8 @@ setup(
         #Application details
         name = "adacost",
         version = "0.1.0",
-        author = "Joel Varghese, Adnan Haque",
-        author_email = "joel.varghese@axa-equitable.com, adnan.haque@axa-equitable.com",
+        author = "Joel Varghese",
+        author_email = "joelprince25@gmail.com",
         description = "AdaCost - A variation of AdaBoost for classification problems with misclassification costs",
         include_package_data = True,
 
