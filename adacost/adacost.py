@@ -3,7 +3,6 @@ import numpy as np
 import pandas as pd
 from numpy.core.umath_tests import inner1d
 from sklearn.base import ClassifierMixin
-from sklearn.externals.six.moves import zip
 from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
 from sklearn.utils.validation import has_fit_parameter, check_is_fitted
 
@@ -376,7 +375,8 @@ class AdaCost(BaseWeightBoosting, ClassifierMixin):
             class in ``classes_``, respectively.
         """
         check_is_fitted(self, "n_classes_")
-        X = self._validate_X_predict(X)
+        #X = self._validate_X_predict(X)
+        X = self._check_X(X)
 
         n_classes = self.n_classes_
         classes = self.classes_[:, np.newaxis]
@@ -416,7 +416,8 @@ class AdaCost(BaseWeightBoosting, ClassifierMixin):
         check_is_fitted(self, "n_classes_")
 
         n_classes = self.n_classes_
-        X = self._validate_X_predict(X)
+        #X = self._validate_X_predict(X)
+        X = self._check_X(X)
 
         if self.algorithm == 'SAMME.R':
             # The weights are all 1. for SAMME.R
